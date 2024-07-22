@@ -92,11 +92,11 @@ class ResumeCustomizerGUI(QMainWindow):
         right_layout.addWidget(self.preview)
 
         button_layout = QHBoxLayout()
-        refresh_button = QPushButton("Refresh")
-        refresh_button.clicked.connect(self.refresh_resume)
+        gen_text_button = QPushButton("Generate TXT")
+        gen_text_button.clicked.connect(self.generate_txt)
         generate_button = QPushButton("Generate PDF")
         generate_button.clicked.connect(self.generate_pdf)
-        button_layout.addWidget(refresh_button)
+        button_layout.addWidget(gen_text_button)
         button_layout.addWidget(generate_button)
 
         right_layout.addLayout(button_layout)
@@ -165,9 +165,13 @@ class ResumeCustomizerGUI(QMainWindow):
         """
         self.preview.setHtml(full_html)
 
-    def refresh_resume(self) -> None:
-        self.resume = Resume(self.resume_path)
-        self._init_ui()
+    def generate_txt(self) -> None:
+        file_name, _ = QFileDialog.getSaveFileName(
+            self, "Save Resume", "", "PDF Files (*.pdf)"
+        )
+        if file_name:
+            with open(file_name, "w") as f:
+                f.write(self.resume.to_text())
 
     def generate_pdf(self) -> None:
         file_name, _ = QFileDialog.getSaveFileName(

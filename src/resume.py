@@ -2,11 +2,13 @@ from typing import Dict, List, Union
 import re
 import html
 
+
 class ResumeSection:
     def __init__(self, title: str):
         self.title: str = title
         self.content: List[Union[Dict, List]] = []
         self.enabled: bool = True
+
 
 class Resume:
     def __init__(self, resume_path: str):
@@ -59,14 +61,19 @@ class Resume:
                 {
                     "type": "list",
                     "group": group,
-                    "items": [{"text": item.strip(), "enabled": True} for item in items.split(",")],
-                    "enabled": True
+                    "items": [
+                        {"text": item.strip(), "enabled": True}
+                        for item in items.split(",")
+                    ],
+                    "enabled": True,
                 }
             )
 
-    def _parse_entry_item(self, line: str, current_entry: Dict, current_section: ResumeSection) -> None:
+    def _parse_entry_item(
+        self, line: str, current_entry: Dict, current_section: ResumeSection
+    ) -> None:
         entry_fields = ["company", "date", "title", "location"]
-        
+
         if line.startswith("-"):
             if "bullet_points" not in current_entry:
                 current_entry["bullet_points"] = []
@@ -80,7 +87,9 @@ class Resume:
             else:
                 self._append_entry(current_entry.copy(), current_section)
                 current_entry.clear()
-                current_entry.update({"type": "entry", "enabled": True, entry_fields[0]: line})
+                current_entry.update(
+                    {"type": "entry", "enabled": True, entry_fields[0]: line}
+                )
 
     def to_text(self) -> str:
         output = self._format_personal_info()
@@ -115,7 +124,7 @@ class Resume:
             if k == "bullet_points":
                 output += "\n".join(f"- {i}" for i in v) + "\n"
             elif k not in ["type", "enabled"]:
-                output += f"{k.capitalize() + ": " if k else ''}{v}\n"
+                output += f"{v}\n"
         return output + "\n"
 
     def _format_list(self, list_item: Dict) -> str:
@@ -131,15 +140,15 @@ class Resume:
                 {
                     "title": section.title,
                     "enabled": section.enabled,
-                    "content": section.content
+                    "content": section.content,
                 }
                 for section in self.sections
-            ]
+            ],
         }
-    
+
     def to_html(self) -> str:
         html_content = f"<div class='resume-container'>{self._personal_info_to_html()}"
-        
+
         for section in self.sections:
             if section.enabled:
                 html_content += f"<div class='section'><h2>{html.escape(section.title.upper())}</h2>"
@@ -156,30 +165,40 @@ class Resume:
 
     def _personal_info_to_html(self) -> str:
         if not self.personal_info:
-            return ''
-        
+            return ""
+
         name = self.personal_info[0]
         other_info = self.personal_info[1:]
-        
-        html_content = f"<div class='personal-info'><h1 class='name'>{html.escape(name)}</h1>"
+
+        html_content = (
+            f"<div class='personal-info'><h1 class='name'>{html.escape(name)}</h1>"
+        )
         if other_info:
-            html_content += "<div class='other-info'>" + " | ".join(html.escape(line) for line in other_info) + "</div>"
+            html_content += (
+                "<div class='other-info'>"
+                + " | ".join(html.escape(line) for line in other_info)
+                + "</div>"
+            )
         html_content += "</div>"
-        
+
         return html_content
 
     def _entry_to_html(self, entry: Dict) -> str:
         html_content = "<div class='entry'>"
         html_content += "<div class='entry-header'>"
         if "company" in entry:
-            html_content += f"<span class='company'>{html.escape(entry['company'])}</span>"
+            html_content += (
+                f"<span class='company'>{html.escape(entry['company'])}</span>"
+            )
         if "date" in entry:
             html_content += f"<span class='date'>{html.escape(entry['date'])}</span>"
         html_content += "</div>"
         if "title" in entry:
             html_content += f"<div class='title'>{html.escape(entry['title'])}</div>"
         if "location" in entry:
-            html_content += f"<div class='location'>{html.escape(entry['location'])}</div>"
+            html_content += (
+                f"<div class='location'>{html.escape(entry['location'])}</div>"
+            )
         if "bullet_points" in entry:
             html_content += "<ul class='bullet-points'>"
             for point in entry["bullet_points"]:
@@ -194,6 +213,7 @@ class Resume:
         html_content += html.escape(", ".join(enabled_items))
         html_content += "</div>"
         return html_content
+
 
 if __name__ == "__main__":
     resume = Resume("full_resume.txt")
