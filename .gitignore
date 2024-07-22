@@ -1,1 +1,4 @@
 personal_resume.txt
+files
+__pycache__/
+*.py[cod]
