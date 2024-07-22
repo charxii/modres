@@ -9,8 +9,8 @@ Built this because I was tired of managing resumes via copy paste. This app allo
 ## Installation
 
 ```
-git clone
-cd ModRes
+git clone https://github.com/charxii/modres.git
+cd modres
 pip install -r requirements.txt
 python run.py
 ```
