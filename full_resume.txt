@@ -1,0 +1,47 @@
+Jobby McJobFace  
+123-456-7890  
+email@email.com 
+linkedin.com/in/username
+https://github.com/username  
+
+# New Header
+
+Company A
+January 2024 - December 2024
+Birdwatcher
+Forest, NY
+- Conducted detailed avian observation and monitoring.
+- Engaged in activities that subtly influenced bird behavior.
+- Operated and maintained advanced optical equipment for precise birdwatching (binoculars).
+
+# Skills  
+
+/list (Programming Languages)(Language1, Language2, Language3, Language4)  
+/list (Other Skills)(Skill1, Skill2, Skill3, Skill4)  
+
+# Education  
+
+University Name  
+August 2020 - June 2024  
+Bachelor of Science in Major
+/none
+City, State  
+- GPA: 1.0
+
+# Projects  
+
+Weather Wizard
+/none
+Forecasting Application
+JavaScript, React, OpenWeatherMap API
+- One of the projects of all time
+- Definitely not copy and pasted from an online tutorial
+- Please hire me
+
+Weather Wizard 2
+JavaScript, React, OpenWeatherMap API
+The same application, in a different format!
+/none
+- This one has the tools on the right!
+- Choose which one you like better 
+- But you should probably stick to one
